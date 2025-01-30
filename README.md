@@ -14,6 +14,12 @@ Basically it's a sudo-friendly replacement of `zenity --password`.
 
 It's used with (or rather by) `sudo` and so of course it respects `/etc/sudoers`.
 
+Additionally, there's a `gaskpass-sudo` script that passes given args as both prompt and command:
+
+```sh
+gaskpass-sudo ls -l
+```
+
 # Building
 
 Make sure to install `gtk4`, clone the repo and run `make`.

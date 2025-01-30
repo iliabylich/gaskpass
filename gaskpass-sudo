@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -eu
+
+SUDO_ASKPASS=/usr/bin/gaskpass SUDO_PROMPT="$@" sudo --askpass $@
