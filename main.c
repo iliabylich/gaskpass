@@ -37,6 +37,10 @@ void on_activate() {
   gtk_window_set_application(win, app);
 
   GtkWidget *form = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+  gtk_widget_set_margin_top(form, 10);
+  gtk_widget_set_margin_bottom(form, 10);
+  gtk_widget_set_margin_start(form, 10);
+  gtk_widget_set_margin_end(form, 10);
   gtk_window_set_child(win, form);
 
   GtkWidget *label = gtk_label_new(header);
