@@ -22,4 +22,8 @@ gaskpass-sudo ls -l
 
 # Building
 
-Make sure to install `gtk4`, clone the repo and run `make`.
+```sh
+$ meson setup build --buildtype=release
+$ meson compile -C build
+$ meson install -C build
+```
