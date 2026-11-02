@@ -20,10 +20,11 @@ Additionally, there's a `gaskpass-sudo` script that passes given args as both pr
 gaskpass-sudo ls -l
 ```
 
-# Building
+# Development
+
+Make sure to have GTK4 (`libgtk-4-dev`) and [mise](https://mise.jdx.dev) installed.
 
 ```sh
-$ meson setup build --buildtype=release
-$ meson compile -C build
-$ meson install -C build
+$ mise setup --profile debug
+$ mise dev
 ```

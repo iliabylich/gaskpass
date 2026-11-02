@@ -1,26 +1,42 @@
+monorepo_root = true
+
+[monorepo]
+config_roots = [".github"]
+
+[tools]
+meson = "latest"
+ninja = "latest"
+uv = "latest"
+
+[task_config]
+shell = "bash -euo pipefail -c"
+
 [vars]
 build_dir = "build"
 
 [tasks.setup]
-usage = '''
-arg "<profile>" {
-    choices "debug" "release"
-}
-'''
-run = "meson setup {{vars.build_dir}} --buildtype={{usage.profile}}"
+usage = 'flag "--profile <profile>" required=#true { choices "debug" "release" }'
+run = "meson setup {{vars.build_dir}} --prefix=/usr --buildtype={{usage.profile}}"
+
+[tasks.build]
+run = "meson compile -C {{vars.build_dir}}"
 
 [tasks.dev]
+depends = ["build"]
+run = "./{{vars.build_dir}}/gaskpass 'Enter your password:'"
+
+[tasks.release]
 run = [
-    "meson compile -C {{vars.build_dir}}",
-    "./{{vars.build_dir}}/gaskpass 'Enter your password:'",
+    { task = "setup --profile release" },
+    { task = "build" },
 ]
 
 [tasks.test-install]
-run = [
-    "meson setup {{vars.build_dir}} --buildtype=release --prefix=$(pwd)/test-install/usr",
-    "meson compile -C {{vars.build_dir}}",
-    "meson install -C {{vars.build_dir}}",
-]
+depends = ["release"]
+run = "meson install -C {{vars.build_dir}} --destdir '{{config_root}}/test-install'"
 
 [tasks.clean]
 run = "rm -rf {{vars.build_dir}}"
+
+[tasks.outdated]
+run = [{ task = "//.github:outdated" }]
