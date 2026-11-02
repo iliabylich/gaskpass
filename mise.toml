@@ -1,0 +1,26 @@
+[vars]
+build_dir = "build"
+
+[tasks.setup]
+usage = '''
+arg "<profile>" {
+    choices "debug" "release"
+}
+'''
+run = "meson setup {{vars.build_dir}} --buildtype={{usage.profile}}"
+
+[tasks.dev]
+run = [
+    "meson compile -C {{vars.build_dir}}",
+    "./{{vars.build_dir}}/gaskpass 'Enter your password:'",
+]
+
+[tasks.test-install]
+run = [
+    "meson setup {{vars.build_dir}} --buildtype=release --prefix=$(pwd)/test-install/usr",
+    "meson compile -C {{vars.build_dir}}",
+    "meson install -C {{vars.build_dir}}",
+]
+
+[tasks.clean]
+run = "rm -rf {{vars.build_dir}}"
