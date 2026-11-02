@@ -19,8 +19,13 @@ void on_confirm() {
 
 void on_cancel() { quit(EXIT_FAILURE); }
 
-bool on_key_press(GtkEventControllerKey *, guint keyval, guint, GdkModifierType,
-                  gpointer) {
+bool on_key_press(GtkEventControllerKey *controller, guint keyval,
+                  guint keycode, GdkModifierType state, gpointer user_data) {
+  (void)controller;
+  (void)keycode;
+  (void)state;
+  (void)user_data;
+
   if (strcmp(gdk_keyval_name(keyval), "Escape") == 0) {
     on_cancel();
     return TRUE;
